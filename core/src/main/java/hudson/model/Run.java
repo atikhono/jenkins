@@ -58,6 +58,7 @@ import hudson.security.AccessControlled;
 import hudson.security.Permission;
 import hudson.security.PermissionGroup;
 import hudson.security.PermissionScope;
+import hudson.slaves.NodeProperty;
 import hudson.tasks.BuildWrapper;
 import hudson.util.FormApply;
 import hudson.util.LogTaskListener;
@@ -2292,6 +2293,13 @@ public abstract class Run <JobT extends Job<JobT,RunT>,RunT extends Run<JobT,Run
         if (!(this instanceof AbstractBuild)) {
             for (EnvironmentContributingAction a : getActions(EnvironmentContributingAction.class)) {
                 a.buildEnvironment(this, env);
+            }
+
+            for (NodeProperty nodeProperty: n.getNodeProperties()) {
+                Environment environment = nodeProperty.setUp(this/*, l, listener*/);
+                if (environment != null) {
+                    environment.buildEnvVars(env);
+                }
             }
         } // else for compatibility reasons, handled in override after buildEnvironments
 

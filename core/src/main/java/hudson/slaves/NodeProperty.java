@@ -35,6 +35,7 @@ import hudson.model.TaskListener;
 import hudson.model.queue.CauseOfBlockage;
 import hudson.scm.SCM;
 import hudson.model.AbstractBuild;
+import hudson.model.Run;
 import hudson.model.BuildListener;
 import hudson.model.Environment;
 import jenkins.model.Jenkins;
@@ -135,6 +136,10 @@ public abstract class NodeProperty<N extends Node> implements ReconfigurableDesc
      */
     public Environment setUp( AbstractBuild build, Launcher launcher, BuildListener listener ) throws IOException, InterruptedException {
     	return new Environment() {};
+    }
+
+    public Environment setUp( Run build/*, Launcher launcher, BuildListener listener*/ ) throws IOException, InterruptedException {
+        return new Environment() {};
     }
 
     /**
